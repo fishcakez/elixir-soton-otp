@@ -11,7 +11,7 @@ defmodule ProblemB do
       receive do
         :stop ->
           :timer.sleep(1000)
-          exit(:shutdown)
+          exit(:normal)
       end
     end)
   end
@@ -20,6 +20,11 @@ defmodule ProblemB do
   Stop the process.
   """
   def stop(pid) do
+    ref = Process.monitor(pid)
     send(pid, :stop)
+    receive do
+      {:DOWN, ^ref, _, _, _} ->
+        :ok
+    end
   end
 end

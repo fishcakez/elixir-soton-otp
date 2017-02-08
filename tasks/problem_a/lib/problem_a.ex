@@ -10,7 +10,7 @@ defmodule ProblemA do
     Task.start_link(fn() ->
       receive do
         :stop ->
-          exit(:stop)
+          exit(:normal)
       end
     end)
   end
